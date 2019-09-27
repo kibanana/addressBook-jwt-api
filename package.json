@@ -1,0 +1,28 @@
+{
+  "name": "example_addressbook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyw017763/Example_AddressBook.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kyw017763/Example_AddressBook/issues"
+  },
+  "homepage": "https://github.com/kyw017763/Example_AddressBook#readme",
+  "dependencies": {
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.7.1",
+    "mongoose-auto-increment": "^5.0.1",
+    "nodemon": "^1.19.2",
+    "path": "^0.12.7"
+  }
+}
