@@ -34,13 +34,15 @@
                         <td><%= contact.email %></td>
                         <td><%= contact.phone %></td>
                         <td>
-                          <a href="/contacts/<%= contact._id %>/edit?_method=PUT" method="post">
-                            <button class="form-control btn btn-outline-success">수정</button>
-                          </a>
-                          
-                          <form action="/contacts/<%= contact._id %>?_method=DELETE" method="post">
-                            <button type="submit" class="form-control btn btn-outline-danger">삭제</button>
-                          </form>
+                          <div class="btn-group" role="group">
+                            <a href="/contacts/<%= contact._id %>/edit?_method=PUT" method="post">
+                              <button class="btn btn-outline-success">수정</button>
+                            </a>
+
+                            <form action="/contacts/<%= contact._id %>?_method=DELETE" method="post">
+                              <button type="submit" class="btn btn-outline-danger">삭제</button>
+                            </form>
+                          </div>
                         </td>
                       </tr>
                     <% 

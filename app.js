@@ -1,15 +1,18 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const path = require('path');
-const ejs = require('ejs');
-const app = express();
-const methodOverride = require('method-override');
-app.use(methodOverride('_method'));
+import express from 'express';
+import mongoose from 'mongoose';
+import path from 'path';
+import ejs from 'ejs';
+import methodOverride from 'method-override';
+import config from './config';
 
+const app = express();
+app.use(methodOverride('_method'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-let connection = mongoose.createConnection(process.env.MONGODB, {useUnifiedTopology : true, useNewUrlParser : true,}, function(err) {
+console.log(config.mongodbUri);
+
+let connection = mongoose.createConnection(config.mongodbUri, {useUnifiedTopology : true, useNewUrlParser : true,}, function(err) {
   if(err){
     console.log("Connected failed");
   }
