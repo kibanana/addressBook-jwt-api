@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 // data match - json form 통일
-export const successTrue = function(data){
+const successTrue = function(data){
   return {
     success: true,
     message: null,
@@ -11,18 +11,18 @@ export const successTrue = function(data){
 };
 
 // data miss - json form 통일
-export const successFalse = function(err, message){
+const successFalse = function(err, message){
   if(!err && !message) message = 'data not found';
   return {
     success: false,
     message: message,
-    errors: (err)? util.parseError(err): null,
+    errors: (err)? parseError(err): null,
     data: null
   };
 };
 
 // error form 통일
-export const parseError = function(errors){
+const parseError = function(errors){
   let parsed = {};
   if(errors.name == 'ValidationError'){
     for(let name in errors.errors){
@@ -39,7 +39,7 @@ export const parseError = function(errors){
 
 
 // middlewares - jwt 가 있는지 확인
-export const isSigned = function(req, res, next){
+const isSigned = function(req, res, next){
   let token = req.headers['x-access-token'];
   if (!token) return res.json(successFalse(null, 'token is required!'));
   else {
@@ -52,3 +52,5 @@ export const isSigned = function(req, res, next){
     });
   }
 };
+
+export {successTrue, successFalse, parseError, isSigned};

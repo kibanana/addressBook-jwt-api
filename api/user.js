@@ -18,7 +18,7 @@ const checkP = (req, res, next) => {
   });
 };
 
-router.get('/', util.isSigned, (req, res, next) => {
+router.get('/users', util.isSigned, (req, res, next) => {
   User.find({})
   .sort({name: 1})
   .exec(function (err, users) {
@@ -26,26 +26,26 @@ router.get('/', util.isSigned, (req, res, next) => {
   });
 });
 
-router.post('/', (req, res, next) => {
+router.post('/users', (req, res, next) => {
   const newUser = new User(req.body);
   newUser.save(function (err, user) {
     res.json(err || !user ? util.successFalse(err) : util.successTrue(user));
   });
 });
 
-router.get('/:name', util.isSigned, (req, res, next) => {
+router.get('/users/:name', util.isSigned, (req, res, next) => {
   User.findOne({name: req.params.name}, function (err, user) {
     res.json(err || !user ? util.successFalse(err) : util.successTrue(user));
   });
 });
 
-router.patch('/:name', util.isSigned, checkP, (req, res, next) => {
-  User.findOneAndUpdate({name: req.params.name}, {$set: req.body}, {new: true}, function(err, user) {
+router.patch('/users/:name', util.isSigned, checkP, (req, res, next) => {
+  User.findOneAndUpdate({name: req.params.name}, {$set: {password: req.body.password}}, {new: true}, function(err, user) {
     res.json(err || !user ? util.successFalse(err) : util.successTrue(user));
   });
 });
 
-router.delete('/:name', util.isSigned, checkP, (req, res, next) => {
+router.delete('/users/:name', util.isSigned, checkP, (req, res, next) => {
   User.findByIdAndDelete({name: req.params.name}, function (err, user) {
     res.json(err || !user ? util.successFalse(err) : util.successTrue(user));
   });
@@ -76,8 +76,8 @@ router.get("/contacts/:id/edit", util.isSigned, function(req, res){
   });
 });
 
-router.patch("/contacts/:id", util.isSigned, function(req, res){
-  Contact.findOneAndUpdate({_id: req.params.id}, {$set: req.body}, {new: true}, function(err, contact){
+router.put("/contacts/:id", util.isSigned, function(req, res){
+  Contact.findOneAndUpdate({_id: req.params.id}, req.body, {new: true}, function(err, contact){
     res.json(err || !contact ? util.successFalse(err) : util.successTrue(contact));
   });
 });

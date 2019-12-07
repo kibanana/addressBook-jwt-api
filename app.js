@@ -17,8 +17,8 @@ app.use(function (req, res, next) {
 
 app.set('jwt-secret', config.jwtSecret);
 
-app.use('api/auth', auth);
-app.use('api/', contacts);
+app.use('/api/auth', auth);
+app.use('/api', contacts);
 
 let port = 3000;
 app.listen(port, function(){

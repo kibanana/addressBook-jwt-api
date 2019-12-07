@@ -13,18 +13,18 @@ router.post('/signin', (req, res, next) => {
   }
 
   if(!req.body.name || !req.body.password){
-    isValid = false;
+    inValid = false;
     validationError.errors.name = {message: 'Username or Password is required!'};
   }
   
-  if(!isValid) return res.json(util.successFalse(validationError));
+  if(!inValid) return res.json(util.successFalse(validationError));
   else next();
 }, (req, res, next) => {
   User.findOne({name: req.body.name})
   .exec((err, user) => {
     if(err) {
       return res.json(util.successFalse(err));
-    } else if(!user || !user.authenticate(req.body.password)) {
+    } else if(!user || !user.authentificate(req.body.password)) {
       return res.json(util.successFalse(null, 'Username or Password is invalid'));
     } else {
       let payload = {
@@ -42,7 +42,9 @@ router.post('/signin', (req, res, next) => {
   });
 });
 
+// me는 token을 해독해서 DB에서 user 정보를 return한다
 router.get('/me', util.isSigned, (req, res, next) => {
+  console.log(req.decoded);
   User.findById(req.decoded._id)
   .exec((err, user) => {
     return res.json(err || !user ? util.successFalse(err) : util.successTrue(user));

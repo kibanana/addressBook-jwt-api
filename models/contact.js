@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import connection from './connection';
 
 const autoIncrement = require('mongoose-auto-increment');
