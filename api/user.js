@@ -54,46 +54,37 @@ router.delete('/:name', util.isSigned, checkP, (req, res, next) => {
 
 router.get("/contacts", util.isSigned, (req, res) => {
   Contact.find({}, function(err, contacts) {
-    res.json(err || users ? util.successTrue(users) : util.successFalse(err));
+    res.json(err || !contacts ? util.successFalse(err) : util.successTrue(contacts));
   });
-});
-
-router.get("/contacts/new", util.isSigned, function(req, res) {
-  res.render(path.join(__dirname, 'views', 'new.ejs'));
 });
 
 router.post("/contacts", util.isSigned, function(req, res) {
   Contact.create(req.body, function(err, contact){
-    if(err) return res.json(err);
-    res.redirect("/contacts");
+    res.json(err || !contact ? util.successFalse(err) : util.successTrue(contact));
   });
 });
 
 router.get("/contacts/:id", util.isSigned, function(req, res){
-  Contact.findOne({_id:req.params.id}, function(err, contact){
-    if(err) return res.json(err);
-    res.render(path.join(__dirname, 'views', 'show.ejs'), {contact:contact});  
+  Contact.findOne({_id: req.params.id}, function(err, contact){
+    res.json(err || !contact ? util.successFalse(err) : util.successTrue(contact));
   });
 });
 
 router.get("/contacts/:id/edit", util.isSigned, function(req, res){
-  Contact.findOne({_id:req.params.id}, function(err, contact){
-    if(err) return res.json(err);
-    res.render(path.join(__dirname, 'views', 'edit.ejs'), {contact:contact});  
+  Contact.findOne({_id: req.params.id}, function(err, contact){
+    res.json(err || !contact ? util.successFalse(err) : util.successTrue(contact));
   });
 });
 
 router.put("/contacts/:id", util.isSigned, function(req, res){
-  Contact.findOneAndUpdate({_id:req.params.id}, req.body, function(err, contact){
-    if(err) return res.json(err);    
-    res.redirect("/contacts/"+req.params.id);  
+  Contact.findOneAndUpdate({_id: req.params.id}, req.body, function(err, contact){
+    res.json(err || !contact ? util.successFalse(err) : util.successTrue(contact));
   });
 });
 
 router.delete("/contacts/:id", util.isSigned, function(req, res){
-  Contact.deleteOne({_id:req.params.id}, function(err, contact){
-    if(err) return res.json(err);    
-    res.redirect("/contacts"); 
+  Contact.deleteOne({_id: req.params.id}, function(err, contact){
+    res.json(err || !contact ? util.successFalse(err) : util.successTrue(contact));
   });
 });
 
