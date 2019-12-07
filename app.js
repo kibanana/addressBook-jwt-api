@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import config from './config';
 import auth from './api/auth';
-import contacts from './api/contacts';
+import contacts from './api/user';
 
 const app = express();
 
