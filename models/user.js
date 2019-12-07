@@ -24,4 +24,8 @@ const userSchema = mongoose.Schema({
   }
 });
 
+userSchema.methods.authentificate = function (password) {
+  return password == this.password;
+};
+
 export default connection.model("user", userSchema);
