@@ -76,8 +76,8 @@ router.get("/contacts/:id/edit", util.isSigned, function(req, res){
   });
 });
 
-router.put("/contacts/:id", util.isSigned, function(req, res){
-  Contact.findOneAndUpdate({_id: req.params.id}, req.body, function(err, contact){
+router.patch("/contacts/:id", util.isSigned, function(req, res){
+  Contact.findOneAndUpdate({_id: req.params.id}, {$set: req.body}, {new: true}, function(err, contact){
     res.json(err || !contact ? util.successFalse(err) : util.successTrue(contact));
   });
 });
