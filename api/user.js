@@ -2,6 +2,8 @@ import express from 'express';
 import User from '../models/user';
 import Contact from '../models/contact';
 import * as util from '../util';
+import config from '../config';
+import * as crypto from 'crypto';
 
 const router = express.Router();
 
@@ -27,6 +29,10 @@ router.get('/users', util.isSigned, (req, res, next) => {
 });
 
 router.post('/users', (req, res, next) => {
+  req.body.password = crypto.createHmac('sha256', config.jwtSecret)
+  .update(req.body.password)
+  .digest('base64');
+  console.log(req.body.password);
   const newUser = new User(req.body);
   newUser.save(function (err, user) {
     res.json(err || !user ? util.successFalse(err) : util.successTrue(user));
